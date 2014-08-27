@@ -1,0 +1,41 @@
+<h1>软件信息</h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>App:</strong>
+  <%= @software.app_id %>
+</p>
+
+<p>
+  <strong>App name:</strong>
+  <%= @software.app_name %>
+</p>
+<p>
+  <strong>App spell:</strong>
+  <%= @software.app_spell %>
+</p>
+
+
+<p>
+  <strong>version number:</strong>
+    <%= @version.number %>
+</p>
+
+<p>
+  <strong>version them_id:</strong>
+    <%= @version.them_id %>
+</p>
+
+<p>
+  <strong>version number:</strong>
+    <%= @version.number %>
+</p>
+
+
+
+
+<%= form_tag(software_version_build_path(@software, @version)) do %>
+   <%= submit_tag("生成") %>
+<% end %>
+
+

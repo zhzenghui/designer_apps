@@ -1,0 +1,27 @@
+<%= form_for([@software, @software.versions.build]) do |f| %>
+
+<div class="field">
+    <%= f.label :number %><br>
+        <%= f.number_field :number %>
+  </div>
+  <div class="field">
+    <%= f.label :schme %><br>
+    <%= f.text_field :schme %> Designer， DesignerM1， DesignerM2
+  </div>
+  <div class="field">
+    <%= f.label :them_id %><br>
+    <%= f.text_field :them_id %>(0（基本）， 1（十）， 2（双子）)
+  </div>
+
+    <div class="field">
+    <%= f.label :software_id %><br>
+    <%= f.text_field :software_id %>
+  </div>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+
+<% end %>

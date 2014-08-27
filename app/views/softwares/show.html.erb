@@ -1,0 +1,31 @@
+<h1>软件信息</h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>App:</strong>
+  <%= @software.app_id %>
+</p>
+
+<p>
+  <strong>App name:</strong>
+  <%= @software.app_name %>
+</p>
+
+<p>
+  <strong>App spell:</strong>
+  <%= @software.app_spell %>
+</p>
+
+<%= link_to 'Edit', edit_software_path(@software) %> |
+<%= link_to 'Back', softwares_path %>
+
+
+<hr />
+
+<h1>版本信息</h1>
+<%= render @software.versions %>
+
+<hr />
+<h1>添加版本</h1>
+
+<%= render "versions/form" %>
