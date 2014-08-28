@@ -65,7 +65,9 @@ class VersionsController < ApplicationController
 	system "chmod +x " + zip_path
 
 	#3.
-	system zip_path
+	# system zip_path
+	HardWorker.perform_async(zip_path)
+
 
     redirect_to software_version_path(@software, @version)
 
