@@ -49,7 +49,11 @@ class VersionsController < ApplicationController
 # 				+
 	file_content = File.read(souce_path)
 
-	content =  "DESGNERID=" + @software.app_id.to_s + " " + file_content
+	content =  "DESGNERID=\"" + @software.app_id.to_s + "\"\n" + "DESGNERNAME=\"" +
+	 @software.app_name + "\"\n" + "DESGNERSPELLNAME=\"" + @software.app_spell + "\"\n" + 
+	 "SCHME=\"" + @version.schme + "\"\n" + 
+	  "them_id=\"" + @version.them_id.to_s + "\"\n" +
+	  "version=\"" + @version.number.to_s + "\"\n"  + file_content
 
 	File.open(zip_path, "w+") do |f|
 	  f.write(content)
