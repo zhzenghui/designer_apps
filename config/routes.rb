@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
-  root "softwares#index"
-  resources :softwares do 
-    resources :versions do
-      post "build" => "versions#build" 
-    end 
 
-    
+
+  root "softwares#index"
+    resources :softwares do 
+      resources :versions do
+        post "build" => "versions#build" 
+      end 
+
+      
   end 
+ 
 
 
 

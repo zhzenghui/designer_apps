@@ -1,6 +1,8 @@
 class HardWorker
   include Sidekiq::Worker
-  def perform(zip_path)
-	system zip_path
+  def perform(name, count)
+    # do something
   end
+
+
 end

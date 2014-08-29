@@ -16,66 +16,63 @@ class VersionsController < ApplicationController
     @software = Software.find(params[:software_id])
     @version = Version.find(params[:version_id])
 
-	flash[:notice] = "正在生 ipa . 稍后可以访问该链接尝试 https://file.i-bejoy.com/"+ @software.app_spell + "/download.html" 
+		flash[:notice] = "正在生 ipa . 稍后可以访问该链接尝试 https://file.i-bejoy.com/"+ @software.app_spell + "/download.html" 
 
 
-	
-
-	# 1.tmp 创建文件
-	# 2.并且给予权限
-	# 3.执行
-  	FileUtils.mkdir_p File.join(Rails.root, "tmp", "sh")
-	zip_path = File.join(Rails.root, "tmp", "sh",    "#{@software.app_id}#{@software.app_spell}.sh")
-	FileUtils.rm_rf zip_path
-
-	souce_path = File.join(Rails.root, "app", "assets", "other", "temp.sh")
-
-
-	logger.info("souce_pathsouce_pathsouce_pathsouce_pathsouce_pathsouce_pathsouce_path")
-	logger.info(souce_path)
-	logger.info("souce_pathsouce_pathsouce_pathsouce_pathsouce_pathsouce_pathsouce_path")
-
-# 写入内容  
-# DESGNERID="15"
-# DESGNERNAME="刘彬2"
-# DESGNERSPELLNAME="liubin1"
-# SCHME="DesignerM2"
-# them_id="2"
-# version="1.0"
-
-# "DESGNERID=" + @software.app_id.to_s + " "
-# 				+ "DESGNERNAME" + @software.app_name.to_s + " "
-# 				+ "DESGNERSPELLNAME" + @software.app_spell.to_s + " "
-# 				+
-	file_content = File.read(souce_path)
-
-	content =  "DESGNERID=\"" + @software.app_id.to_s + "\"\n" + "DESGNERNAME=\"" +
-	 @software.app_name + "\"\n" + "DESGNERSPELLNAME=\"" + @software.app_spell + "\"\n" + 
-	 "SCHME=\"" + @version.schme + "\"\n" + 
-	  "them_id=\"" + @version.them_id.to_s + "\"\n" +
-	  "version=\"" + @version.number.to_s + "\"\n"  + file_content
-
-	File.open(zip_path, "w+") do |f|
-	  f.write(content)
-	end
-
-
-	#2.
-
-	system "chmod +x " + zip_path
-
-	#3.
-	# system zip_path
-	HardWorker.perform_async(zip_path)
-
+		HardWorker.perform_async('bob', 1)
 
     redirect_to software_version_path(@software, @version)
 
   end 
 
-
+ 
 
  private
+
+
+ 	def build_app
+		# 1.tmp 创建文件
+		# 2.并且给予权限
+		# 3.执行
+	  FileUtils.mkdir_p File.join(Rails.root, "tmp", "sh")
+		zip_path = File.join(Rails.root, "tmp", "sh",    "#{@software.app_id}#{@software.app_spell}.sh")
+		FileUtils.rm_rf zip_path
+
+		souce_path = File.join(Rails.root, "app", "assets", "other", "temp.sh")
+
+
+		logger.info("souce_pathsouce_pathsouce_pathsouce_pathsouce_pathsouce_pathsouce_path")
+		logger.info(souce_path)
+		logger.info("souce_pathsouce_pathsouce_pathsouce_pathsouce_pathsouce_pathsouce_path")
+
+		# 写入内容  
+		# DESGNERID="15"
+		# DESGNERNAME="刘彬2"
+		# DESGNERSPELLNAME="liubin1"
+		# SCHME="DesignerM2"
+		# them_id="2"
+		# version="1.0"
+		file_content = File.read(souce_path)
+
+		content =  "DESGNERID=\"" + @software.app_id.to_s + "\"\n" + "DESGNERNAME=\"" +
+		 @software.app_name + "\"\n" + "DESGNERSPELLNAME=\"" + @software.app_spell + "\"\n" + 
+		 "SCHME=\"" + @version.schme + "\"\n" + 
+		  "them_id=\"" + @version.them_id.to_s + "\"\n" +
+		  "version=\"" + @version.number.to_s + "\"\n"  + file_content
+
+		File.open(zip_path, "w+") do |f|
+		  f.write(content)
+		end
+
+
+		#2.
+
+		system "chmod +x " + zip_path
+
+		#3.
+		# system zip_path
+	
+ 	end
     def version_params
       params.require(:version).permit(:number, :schme, :them_id, :software_id)
     end
