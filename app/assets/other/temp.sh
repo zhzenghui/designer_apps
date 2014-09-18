@@ -58,7 +58,7 @@ defaults write $AppPlistPath "CFBundleName" $DESGNERSPELLNAME
 echo "copy icon images"
 cp -R $Icon_images_path $Icon_path
 
-cp -R -a  $RESOUCEPAHT $AppResourcesPath 
+cp -R -a  "$RESOUCEPAHT/" $AppResourcesPath 
 
 
 #------------------------------------
