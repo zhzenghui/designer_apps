@@ -12,7 +12,18 @@ class VersionsController < ApplicationController
 
   end
 
-  def build
+  def modify
+  	s = system 'ls'
+
+
+    @software = Software.find(params[:software_id])
+    @version = Version.find(params[:version_id])
+
+    redirect_to software_version_path(@software, @version)
+
+  end 
+
+  def build 
     @software = Software.find(params[:software_id])
     @version = Version.find(params[:version_id])
 
